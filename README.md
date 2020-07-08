@@ -1,4 +1,4 @@
-# Project Name
+# Hotel Dim Sum
 
 > Project description
 
