@@ -10,7 +10,7 @@
 
 **Returns:** Object
 
-```json
+```
     {
       id: Number,
       nightly_fee: Number,
@@ -31,7 +31,7 @@
 
 **Request Body**: Expects Object with the following keys.
 
-```json
+```
     {
       checkin: Number,
       checkout: Number,
@@ -50,7 +50,7 @@
 
 **Request Body**: Expects JSON with any of the following keys (include only keys to be updated)
 
-```json
+```
     {
       checkin: Date,
       checkout: Date,
