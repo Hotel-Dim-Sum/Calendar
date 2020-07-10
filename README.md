@@ -1,71 +1,43 @@
-## Server API
+# Hotel Dim Sum
 
-### Get reservation info
-  * GET `/api/reservation/:placeID/booking`
+> Project description
 
-**Path Parameters:**
-  * `placeID` reservation id
+> API REQUESTS AND ENDPOINTS
+  - GET: '/api/photos/:placeID'
+  - POST: '/api/photos/:placeID'
+  - PUT: '/api/photos/:placeID'
+  - DELETE: '/api/photos/:placeID'
 
-**Success Status Code:** `200`
+## Related Projects
 
-**Returns:** Object
+  - https://github.com/Hotel-Dim-Sum/Reviews
+  - https://github.com/Hotel-Dim-Sum/Calendar
+  - https://github.com/Hotel-Dim-Sum/PhotoGallery
 
+## Table of Contents
+
+1. [Usage](#Usage)
+1. [Requirements](#requirements)
+1. [Development](#development)
+
+## Usage
+
+> Some usage instructions
+
+## Requirements
+
+An `nvmrc` file is included if using [nvm](https://github.com/creationix/nvm).
+
+- Node 6.13.0
+- etc
+
+## Development
+
+### Installing Dependencies
+
+From within the root directory:
+
+```sh
+npm install -g webpack
+npm install
 ```
-    {
-      id: Number,
-      nightly_fee: Number,
-      cleaning_fee: Number,
-      occupancy_tax_rate: Number,
-      avg_rating: Number,
-      reviews: Number,
-      city: String,
-      max_capacity: Number,
-      books: [Object]
-    }
-```
-
-### Add reservation booking
-  * POST `/api/reservation`
-
-**Success Status Code:** `201`
-
-**Request Body**: Expects Object with the following keys.
-
-```
-    {
-      checkin: Number,
-      checkout: Number,
-      guests: Number
-    }
-```
-
-
-### Update reservation info
-  * PATCH `/api/reservation/:placeID/booking`
-
-**Path Parameters:**
-  * `placeID` reservation id
-
-**Success Status Code:** `204`
-
-**Request Body**: Expects JSON with any of the following keys (include only keys to be updated)
-
-```
-    {
-      checkin: Date,
-      checkout: Date,
-      guests: {
-          adults: Number,
-          children: Number,
-          infants: Number
-        }
-    }
-```
-
-### Delete reservation
-  * DELETE `/api/reservation/:placeID/booking`
-
-**Path Parameters:**
-  * `placeID` reservation id
-
-**Success Status Code:** `204`
