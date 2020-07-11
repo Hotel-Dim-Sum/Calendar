@@ -5,12 +5,13 @@ const csvWriter = require('csv-write-stream');
 
 const writer = csvWriter({ sendHeaders: false });
 
-writer.pipe(fs.createWriteStream('../csv/listingsTable.csv'));
-const generateListing = () => {
-  for (let i = 1; i <= 10; i += 1) {
+writer.pipe(fs.createWriteStream('../csv/listings.csv'));
+const generateListing = (count) => {
+  // change to 1M
+  for (let i = 1; i <= 100; i += 1, count += 1) {
     writer.write(
       {
-        listing_id:i,
+        listing_id: count,
         city: faker.address.city(),
         occupancy_tax_rate: ((Math.round((Math.random()*.05)*1000)/1000) + .08).toFixed(2),
         max_capacity: Math.floor(Math.random() * (15 - 2) + 2),
@@ -22,21 +23,26 @@ const generateListing = () => {
     );
   }
 };
-generateListing();
-console.log('Generated 5');
 
+// generateListing(1);
+// console.log('Generated 100,000');
+// generateListing(100001);
+// console.log('Generated 200,000');
+// generateListing(200001);
 // console.log('Generated 300,000');
-// generateListing();
+// generateListing(300001);
 // console.log('Generated 400,000');
-// generateListing();
+// generateListing(400001);
 // console.log('Generated 500,000');
-// generateListing();
+// generateListing(500001);
 // console.log('Generated 600,000');
-// generateListing();
+// generateListing(600001);
 // console.log('Generated 700,000');
-// generateListing();
+// generateListing(700001);
 // console.log('Generated 800,000');
-// generateListing();
+// generateListing(800001);
 // console.log('Generated 900,000');
+// generateListing(900001);
+// console.log('Generated 1,000,000');
 
 writer.end();

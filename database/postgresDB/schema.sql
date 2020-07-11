@@ -54,3 +54,7 @@ CREATE TABLE users (
 -- ALTER TABLE users ADD PRIMARY KEY (user_id);
 -- ALTER TABLE users
 --   ADD CONSTRAINT users_booking_id_fkey FOREIGN KEY (booking_id) REFERENCES bookings(booking_id);
+
+COPY listings FROM '/Users/admin/Desktop/Calendar/database/postgresDB/csv/listing.csv' DELIMITER',' CSV;
+COPY bookings FROM '/Users/admin/Desktop/Calendar/database/postgresDB/csv/bookings.csv' DELIMITER',' CSV;
+COPY users FROM '/Users/admin/Desktop/Calendar/database/postgresDB/csv/users.csv' DELIMITER',' CSV;
