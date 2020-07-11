@@ -13,7 +13,7 @@ CREATE TABLE listings (
   max_capacity            SMALLINT,
   nightly_fee             INT,
   cleaning_fee            INT,
-  rating                  INT,
+  rating                  decimal,
   reviews                 INT,
   PRIMARY KEY (listing_id)
 );
@@ -31,7 +31,7 @@ CREATE TABLE bookings(
   infants             INT,
   night_fee           SMALLINT,
   cleaning_fee        SMALLINT,
-  occupancy_tax_rate SMALLINT,
+  occupancy_tax_rate decimal,
   PRIMARY KEY (booking_id),
   FOREIGN KEY (listing_id) REFERENCES listings (listing_id)
 );
