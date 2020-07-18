@@ -5,7 +5,7 @@ import Guests from './Guests.jsx';
 import PriceBreakDown from './PriceBreakDown.jsx';
 import styles from '../../dist/style.css';
 
-const placeID = Math.ceil(Math.random() * 100);
+const booking_id = Math.floor(Math.random() * (9999999)) + 1;
 
 class App extends React.Component {
   constructor() {
@@ -30,7 +30,7 @@ class App extends React.Component {
 
   getData() {
     $.ajax({
-      url: `/api/${placeID}`,
+      url: `/api/bookings/${booking_id}`,
       type: 'GET',
       success: (data) => {
         console.log(data[0]);
@@ -59,7 +59,7 @@ class App extends React.Component {
     }
 
     $.ajax({
-      url: `/api/${placeID}`,
+      url: `/api/bookings/${booking_id}`,
       type: 'PATCH',
       data: reservation,
       success: (data) => {
@@ -156,7 +156,7 @@ class App extends React.Component {
     return (<div className={styles.calendarForm}>
       <div className={styles.topBar}>
       <span> <span className={styles.nightlyFee}>${this.state.info.nightly_fee}</span> / night</span>
-      <span className={styles.reviewsRating}> <span className={styles.star}>&#9733;</span> {Math.round(this.state.info.avg_rating * 100)/100} ({this.state.info.reviews})</span>
+      <span className={styles.reviewsRating}> <span className={styles.star}>&#9733;</span> {Math.round(Number(this.state.info.rating) * 100)/100} ({this.state.info.reviews})</span>
       </div>
       <form onSubmit={this.reserve.bind(this)}>
         <div className={styles.checkinGuestsContainer}>
