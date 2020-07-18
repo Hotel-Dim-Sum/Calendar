@@ -12,7 +12,7 @@
     "dev:react": "webpack -d --watch",
     "test": "jest",
     "webpack-prod": "webpack -p --mode=production",
-    "k6": "k6 run server/script.js"
+    "k6": "k6 run k6/script.js"
   },
   "dependencies": {
     "@babel/preset-env": "^7.10.3",
