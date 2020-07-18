@@ -1,25 +1,18 @@
-const Calendar = require('../database/Calendar.js');
+const db = require('../database/db-postgres/index.js');
 
-const find = function (req, res) {
-  const placeID = req.params.placeID;
-  Calendar.find({ id: placeID })
-    .exec((err, data) => {
-      if (err) res.sendStatus(400);
-      res.send(data);
-    });
-};
+const find = (req, res) => {
+  const booking_id = req.params.booking_id;
+  const q = `SELECT * FROM bookings
+  INNER JOIN listings
+  ON bookings.listing_id = listings.listing_id
+  WHERE booking_id = '${booking_id}'`;
 
-const patch = function (req, res) {
-  const placeID = req.params.placeID;
-  const obj = req.body;
-  Calendar.update({ id: placeID }, { $push: { bookings: obj } })
-    .exec((err, data) => {
-      if (err) res.sendStatus(400);
-      res.send(data);
-    });
+  db.query(q, (err, results) => {
+    // console.log('GET SUCCESS', results.rows)
+    res.send(results.rows);
+  });
 };
 
 module.exports = {
-  find,
-  patch
+  find
 }
