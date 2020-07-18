@@ -14,4 +14,4 @@ export default function() {
   const bookId = Math.floor(Math.random() * (9999999)) + 1;
   http.get(`http://localhost:8080/api/bookings/${bookId}`);
   sleep(1);
-}
+};
