@@ -23,4 +23,6 @@ coverage
 # Compiled Dirs (http://nodejs.org/api/addons.html)
 build/
 
-
+# API KEY
+/newrelic.js
+/database/db-postgres/index.js
