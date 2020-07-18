@@ -1,77 +1,27 @@
+const newrelic = require('newrelic');
 const express = require('express');
-const bodyParser = require('body-parser');
-const db = require('../database');
-const path = require('path');
+const cluster = require('cluster');
+const numCPUs = require('os').cpus().length;
 const cors = require('cors');
-// const Controller = require('./Controller.js');
+const Controller = require('./Controller.js')
 
-const Calendar = require('../database/Calendar.js');
 
-const app = express();
-const port = 3001;
+if (cluster.isMaster) {
+  for (let i = 0; i < numCPUs; i++) {
+    // Create a worker
+    cluster.fork();
+  }
+} else {
+  // Workers share the TCP connection in this server
+  const port = 8080;
+  const app = express();
 
-app.use(cors());
+  app.use(cors());
+  app.use(express.json());
+  app.use(express.urlencoded({ extended: true }));
+  app.use('/', express.static(__dirname + '/../client/dist'));
+  app.get('/api/bookings/:booking_id', Controller.find);
 
-app.use('/', express.static(__dirname + '/../client/dist'));
-// app.use('/calendar/', express.static(__dirname + '/../client/dist'));
-
-app.use(bodyParser.urlencoded({extended: true}));
-
-function getRandomInt(max) {
-  return Math.floor(Math.random() * Math.floor(max)) + 1;
+  // All workers use this port
+  app.listen(port, () => console.log(`listening at http://localhost:${port}`));
 }
-
-// Create/Write - post request
-app.post('/api/reservation', (req, res) => {
-  const {checkin, checkout, guests} = req.body;
-  Calendar.insertOne({
-    booking: [
-      {
-        checkin: checkin,
-        checkout: checkout,
-        guests: guests
-      }
-    ]
-  }, (err, data) => {
-    if (err) res.status(400).send('Posting failed');
-    res.status(201).send(results);
-  })
-});
-
-// Read - get request
-// Get the booking for the reservation with id #
-app.get('/api/reservation/:placeID/booking', (req,res) => {
-  let placeID = getRandomInt(5);
-  Calendar.find({ id: placeID })
-    .exec((err, data) => {
-      if (err) res.sendStatus(400);
-      console.log(typeof data);
-      res.send(data);
-    });
-});
-
-// Update - patch request
-app.patch('/api/reservation/:placeID/booking', (req, res) => {
-  const placeID = req.params.placeID;
-  console.log('patch request')
-  const obj = req.body;
-  console.log('body', obj);
-  Calendar.updateOne({ id: placeID }, { $push: { bookings: obj } })
-    .exec((err, data) => {
-      if (err) res.sendStatus(400);
-      res.send(data);
-    });
-});
-
-// Delete - patch request
-app.delete('/api/reservation/:placeID/booking', (req, res) => {
-  const placeID = req.params.placeID;
-  Calendar.deleteOne({ id:placeID}, (err, data) => {
-    if (err) res.sendStatus(400);
-    console.log('delete request success', placeID);
-    res.send(data);
-  })
-});
-
-
-app.listen(port, () => console.log(`listening at http://localhost:${port}`));
