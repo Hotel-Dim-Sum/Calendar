@@ -25,4 +25,4 @@ build/
 
 # API KEY
 /newrelic.js
-/database/db-postgres/index.js
+# /database/db-postgres/index.js
